@@ -2,8 +2,31 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { gql, useQuery } from '@apollo/client';
+
+const TodoListsQuery = gql`
+  query {
+    todoLists {
+      id
+      name
+      tasks {
+        id
+        name
+        status
+        todoListId
+      }
+    }
+  }
+`;
 
 const Home: NextPage = () => {
+  const { data, loading, error } = useQuery(TodoListsQuery);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Oh no... {error.message}</p>;
+
+  console.log(data);
+
   return (
     <div className={styles.container}>
       <Head>

@@ -13,6 +13,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@prisma/client": "^4.1.1",
     "apollo-server-micro": "^3.10.0",
     "graphql": "^16.5.0",

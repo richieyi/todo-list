@@ -1,17 +1,14 @@
 import { PrismaClient } from '@prisma/client';
-import { data } from '../data';
+import { tasksData, todoListsData } from '../data';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.todoList.create({
-    data: {
-      id: '1',
-      name: 'Shopping List',
-    },
+  await prisma.todoList.createMany({
+    data: todoListsData,
   });
 
   await prisma.task.createMany({
-    data: data,
+    data: tasksData,
   });
 }
 
