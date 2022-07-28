@@ -2,7 +2,14 @@
 ### Do not make changes to this file directly
 
 
+type Mutation {
+  createTask(name: String!, todoListId: String!): Task!
+  deleteTask(id: String!): Task!
+  updateTask(id: String!, name: String!, status: Boolean!): Task!
+}
+
 type Query {
+  tasks(todoListId: String!): [Task]!
   todoLists: [TodoList]!
 }
 
@@ -14,7 +21,7 @@ type Task {
 }
 
 type TodoList {
-  id: String
+  id: String!
   name: String
-  tasks: [Task]
+  tasks: [Task]!
 }
