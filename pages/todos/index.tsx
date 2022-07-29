@@ -7,12 +7,6 @@ const GET_TODO_LISTS = gql`
     todoLists {
       id
       name
-      # tasks {
-      #   id
-      #   name
-      #   status
-      #   todoListId
-      # }
     }
   }
 `;
@@ -22,9 +16,6 @@ const CREATE_TODO_LIST = gql`
     createTodoList(name: $name) {
       id
       name
-      # tasks {
-      #   id
-      # }
     }
   }
 `;

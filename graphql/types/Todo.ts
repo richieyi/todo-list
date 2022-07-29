@@ -6,18 +6,18 @@ import {
   nonNull,
 } from 'nexus';
 
-// Task object type
-export const Task = objectType({
-  name: 'Task',
+// Todo object type
+export const Todo = objectType({
+  name: 'Todo',
   definition(t) {
     t.string('id');
     t.string('name');
-    t.boolean('status');
+    t.boolean('completed');
     t.string('todoListId');
-    // t.list.field('tasks', {
-    //   type: 'Task',
+    // t.list.field('todos', {
+    //   type: 'Todo',
     //   async resolve(_parent, _args, ctx) {
-    //     return await ctx.prisma.task.findMany({
+    //     return await ctx.prisma.todo.findMany({
     //       where: {
     //         todoListId: args.todoListId,
     //       },
@@ -27,15 +27,15 @@ export const Task = objectType({
   },
 });
 
-// Query for many tasks
-export const TasksQuery = extendType({
+// Query for many todos
+export const TodosQuery = extendType({
   type: 'Query',
   definition(t) {
-    t.nonNull.list.field('tasks', {
-      type: Task,
+    t.nonNull.list.field('todos', {
+      type: Todo,
       args: { todoListId: nonNull(stringArg()) },
       async resolve(_parent, args, ctx) {
-        return await ctx.prisma.task.findMany({
+        return await ctx.prisma.todo.findMany({
           where: {
             todoListId: args.todoListId,
           },
@@ -45,21 +45,21 @@ export const TasksQuery = extendType({
   },
 });
 
-// Mutation to create task
-export const CreateTaskMutation = extendType({
+// Mutation to create todo
+export const CreateTodoMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.field('createTask', {
-      type: Task,
+    t.field('createTodo', {
+      type: Todo,
       args: {
         name: nonNull(stringArg()),
         todoListId: nonNull(stringArg()),
       },
       async resolve(_parent, args, ctx) {
-        return await ctx.prisma.task.create({
+        return await ctx.prisma.todo.create({
           data: {
             name: args.name,
-            status: false,
+            completed: false,
             todoListId: args.todoListId,
           },
         });
@@ -68,25 +68,25 @@ export const CreateTaskMutation = extendType({
   },
 });
 
-// Mutation to update task
-export const UpdateTaskMutation = extendType({
+// Mutation to update todo
+export const UpdateTodoMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.nonNull.field('updateTask', {
-      type: Task,
+    t.nonNull.field('updateTodo', {
+      type: Todo,
       args: {
         id: nonNull(stringArg()),
         name: nonNull(stringArg()),
-        status: nonNull(booleanArg()),
+        completed: nonNull(booleanArg()),
       },
       async resolve(_parent, args, ctx) {
-        return await ctx.prisma.task.update({
+        return await ctx.prisma.todo.update({
           where: {
             id: args.id,
           },
           data: {
             name: args.name,
-            status: args.status,
+            completed: args.completed,
           },
         });
       },
@@ -94,17 +94,17 @@ export const UpdateTaskMutation = extendType({
   },
 });
 
-// Mutation to delete task
-export const DeleteTaskMutation = extendType({
+// Mutation to delete todo
+export const DeleteTodoMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.nonNull.field('deleteTask', {
-      type: Task,
+    t.nonNull.field('deleteTodo', {
+      type: Todo,
       args: {
         id: nonNull(stringArg()),
       },
       async resolve(_parent, args, ctx) {
-        return await ctx.prisma.task.delete({
+        return await ctx.prisma.todo.delete({
           where: {
             id: args.id,
           },

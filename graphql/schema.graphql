@@ -3,26 +3,26 @@
 
 
 type Mutation {
-  createTask(name: String!, todoListId: String!): Task
+  createTodo(name: String!, todoListId: String!): Todo
   createTodoList(name: String!): TodoList!
-  deleteTask(id: String!): Task!
-  updateTask(id: String!, name: String!, status: Boolean!): Task!
+  deleteTodo(id: String!): Todo!
+  updateTodo(completed: Boolean!, id: String!, name: String!): Todo!
 }
 
 type Query {
-  tasks(todoListId: String!): [Task]!
   todoLists: [TodoList]!
+  todos(todoListId: String!): [Todo]!
 }
 
-type Task {
+type Todo {
+  completed: Boolean
   id: String
   name: String
-  status: Boolean
   todoListId: String
 }
 
 type TodoList {
   id: String!
   name: String
-  tasks: [Task]!
+  todos: [Todo]!
 }

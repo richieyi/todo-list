@@ -25,14 +25,14 @@ model TodoList {
   name      String
   createdAt DateTime  @default(now())
   updatedAt DateTime?
-  tasks     Task[]
+  todos     Todo[]
   // user      User     @relation(fields: [userId], references: [id])
   // userId    String
 }
 
-model Task {
+model Todo {
   id         String    @id @default(uuid())
-  status     Boolean
+  completed  Boolean
   name       String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime?

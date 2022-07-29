@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { tasksData, todoListsData } from '../data';
+import { todosData, todoListsData } from '../data';
 const prisma = new PrismaClient();
 
 async function main() {
@@ -7,8 +7,8 @@ async function main() {
     data: todoListsData,
   });
 
-  await prisma.task.createMany({
-    data: tasksData,
+  await prisma.todo.createMany({
+    data: todosData,
   });
 }
 

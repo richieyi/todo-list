@@ -1,5 +1,5 @@
 import { objectType, extendType, nonNull, stringArg } from 'nexus';
-import { Task } from './Task';
+import { Todo } from './Todo';
 
 // TodoList object type
 export const TodoList = objectType({
@@ -7,8 +7,8 @@ export const TodoList = objectType({
   definition(t) {
     t.nonNull.string('id');
     t.string('name');
-    t.nonNull.list.field('tasks', {
-      type: Task,
+    t.nonNull.list.field('todos', {
+      type: Todo,
       async resolve(_parent, _args, ctx) {
         return await ctx.prisma.todoList
           .findUnique({
@@ -16,7 +16,7 @@ export const TodoList = objectType({
               id: _parent.id,
             },
           })
-          .tasks();
+          .todos();
       },
     });
   },

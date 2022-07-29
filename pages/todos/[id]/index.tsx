@@ -2,36 +2,36 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { gql, useQuery, useMutation } from '@apollo/client';
-import TaskItem from '../../../components/TaskItem';
+import TodoItem from '../../../components/TodoItem';
 
-interface Task {
+interface Todo {
   id: string;
   name: string;
-  status: boolean;
+  completed: boolean;
   todoListId: string;
 }
 
 const GET_TASKS = gql`
-  query GetTasks($todoListId: String!) {
-    tasks(todoListId: $todoListId) {
+  query GetTodos($todoListId: String!) {
+    todos(todoListId: $todoListId) {
       id
       name
-      status
+      completed
     }
   }
 `;
 
 const CREATE_TASK = gql`
-  mutation CreateTask($name: String!, $todoListId: String!) {
-    createTask(name: $name, todoListId: $todoListId) {
+  mutation CreateTodo($name: String!, $todoListId: String!) {
+    createTodo(name: $name, todoListId: $todoListId) {
       id
       name
-      status
+      completed
     }
   }
 `;
 
-function TasksPage() {
+function TodosPage() {
   const [name, setName] = useState<string>('');
   const router = useRouter();
   const { data, loading, error } = useQuery(GET_TASKS, {
@@ -40,7 +40,7 @@ function TasksPage() {
     },
     skip: !router.isReady,
   });
-  const [createTask] = useMutation(CREATE_TASK, {
+  const [createTodo] = useMutation(CREATE_TASK, {
     // refetchQueries: [
     //   {
     //     query: GET_TASKS,
@@ -49,28 +49,27 @@ function TasksPage() {
     //     },
     //   },
     // ],
-    // Running into an issue with this cache update
-    // Works when creating a new todo list but not here
-    update(cache, { data: { createTask } }) {
+    update(cache, { data: { createTodo } }) {
       cache.modify({
         fields: {
-          tasks(existingTasks = []) {
+          todos(existingTodos = []) {
             const newTodoRef = cache.writeFragment({
-              data: createTask,
+              data: createTodo,
               fragment: gql`
                 fragment NewTodo on Todo {
                   id
                   name
-                  status
+                  completed
                 }
               `,
             });
-            return [...existingTasks, newTodoRef];
+            return [...existingTodos, newTodoRef];
           },
         },
       });
     },
-    //   const { tasks }: any = cache.readQuery({
+    // update(cache, { data: { createTodo } }) {
+    //   const { todos }: any = cache.readQuery({
     //     query: GET_TASKS,
     //     variables: {
     //       todoListId: router.query.id,
@@ -80,7 +79,7 @@ function TasksPage() {
     //   cache.writeQuery({
     //     query: GET_TASKS,
     //     data: {
-    //       tasks: [...tasks, createTask],
+    //       todos: [...todos, createTodo],
     //     },
     //   });
     // },
@@ -92,7 +91,7 @@ function TasksPage() {
   function handleSubmit(e: any) {
     e.preventDefault();
 
-    createTask({
+    createTodo({
       variables: {
         name,
         todoListId: router.query.id,
@@ -100,18 +99,18 @@ function TasksPage() {
     });
   }
 
-  function renderTasks() {
-    return data?.tasks.map((task: Task) => (
-      <TaskItem key={task.id} task={task} />
+  function renderTodos() {
+    return data?.todos.map((todo: Todo) => (
+      <TodoItem key={todo.id} todo={todo} />
     ));
   }
 
   return (
     <div>
       <Link href="/todos">Back to todos</Link>
-      <h1>Tasks page</h1>
+      <h1>Todos page</h1>
       <div>
-        <span>New Task</span>
+        <span>New Todo</span>
         <form onSubmit={handleSubmit}>
           <input
             value={name}
@@ -120,9 +119,9 @@ function TasksPage() {
           <button type="submit">Submit</button>
         </form>
       </div>
-      <div>{renderTasks()}</div>
+      <div>{renderTodos()}</div>
     </div>
   );
 }
 
-export default TasksPage;
+export default TodosPage;
