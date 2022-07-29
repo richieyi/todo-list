@@ -1,11 +1,28 @@
+export const usersData = [
+  {
+    id: '1',
+    name: 'john',
+    email: 'john@gmail.com',
+    password: 'password',
+  },
+  {
+    id: '2',
+    name: 'jill',
+    email: 'jill@yahoo.com',
+    password: 'password',
+  },
+];
+
 export const todoListsData = [
   {
     id: '1',
     name: 'Todo List',
+    userId: '1',
   },
   {
     id: '2',
     name: 'Grocery List',
+    userId: '1',
   },
 ];
 

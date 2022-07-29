@@ -25,14 +25,10 @@ function TodoLists() {
   }
 
   return (
-    <div className="text-3xl">
-      <h1>Todos Lists Page</h1>
-      <div>
-        <span>NEW TODO LIST</span>
-        <NewTodoListForm />
-      </div>
+    <>
+      <NewTodoListForm />
       <div>{renderTodoLists()}</div>
-    </div>
+    </>
   );
 }
 

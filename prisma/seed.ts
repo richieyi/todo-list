@@ -1,8 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import { todosData, todoListsData } from '../data';
+import { usersData, todosData, todoListsData } from './seedData';
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.user.createMany({
+    data: usersData,
+  });
+
   await prisma.todoList.createMany({
     data: todoListsData,
   });

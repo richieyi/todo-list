@@ -4,7 +4,7 @@
 
 type Mutation {
   createTodo(name: String!, todoListId: String!): Todo
-  createTodoList(name: String!): TodoList!
+  createTodoList(name: String!, userId: String!): TodoList!
   deleteTodo(id: String!): Todo!
   deleteTodoList(id: String!): TodoList!
   updateTodo(completed: Boolean!, id: String!, name: String!): Todo!
@@ -14,6 +14,7 @@ type Mutation {
 type Query {
   todoLists: [TodoList]!
   todos(todoListId: String!): [Todo]!
+  users: [User]!
 }
 
 type Todo {
@@ -27,4 +28,13 @@ type TodoList {
   id: String!
   name: String
   todos: [Todo]!
+  userId: String
+}
+
+type User {
+  email: String
+  id: String!
+  name: String
+  password: String
+  todoList: [TodoList]!
 }

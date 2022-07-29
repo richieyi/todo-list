@@ -14,16 +14,6 @@ export const Todo = objectType({
     t.string('name');
     t.boolean('completed');
     t.string('todoListId');
-    // t.list.field('todos', {
-    //   type: 'Todo',
-    //   async resolve(_parent, _args, ctx) {
-    //     return await ctx.prisma.todo.findMany({
-    //       where: {
-    //         todoListId: args.todoListId,
-    //       },
-    //     });
-    //   },
-    // });
   },
 });
 

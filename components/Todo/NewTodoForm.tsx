@@ -46,7 +46,9 @@ function NewTodoForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <label htmlFor="todoName">New Todo</label>
       <input
+        name="todoName"
         value={name}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setName(e.target.value)

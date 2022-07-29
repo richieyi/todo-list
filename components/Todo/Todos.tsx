@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 import Todo from './index';
@@ -41,15 +40,10 @@ function Todos() {
   }
 
   return (
-    <div>
-      <Link href="/todos">Back to todos</Link>
-      <h1>Todos page</h1>
-      <div>
-        <span>New Todo</span>
-        <NewTodoForm />
-      </div>
+    <>
+      <NewTodoForm />
       <div>{renderTodos()}</div>
-    </div>
+    </>
   );
 }
 

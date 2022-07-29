@@ -7,6 +7,7 @@ export const TodoList = objectType({
   definition(t) {
     t.nonNull.string('id');
     t.string('name');
+    t.string('userId');
     t.nonNull.list.field('todos', {
       type: Todo,
       async resolve(_parent, _args, ctx) {
@@ -22,7 +23,7 @@ export const TodoList = objectType({
   },
 });
 
-// Query for many todo lists
+// Query for todo lists
 export const TodoListsQuery = extendType({
   type: 'Query',
   definition(t) {
@@ -42,11 +43,13 @@ export const CreateTodoListMutation = extendType({
       type: TodoList,
       args: {
         name: nonNull(stringArg()),
+        userId: nonNull(stringArg()),
       },
       async resolve(_parents, args, ctx) {
         return await ctx.prisma.todoList.create({
           data: {
             name: args.name,
+            userId: args.userId,
           },
         });
       },
