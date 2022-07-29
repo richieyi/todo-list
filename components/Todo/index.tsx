@@ -1,43 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
-// import { useRouter } from 'next/router';
+import { useMutation } from '@apollo/client';
+import { UPDATE_TODO, DELETE_TODO } from './mutations';
 
-// const GET_TODOS = gql`
-//   query GetTodos($todoListId: String!) {
-//     todos(todoListId: $todoListId) {
-//       id
-//       name
-//       completed
-//     }
-//   }
-// `;
-
-const UPDATE_TODO = gql`
-  mutation UpdateTodo(
-    $id: String!
-    $name: String!
-    $completed: Boolean!
-  ) {
-    updateTodo(id: $id, name: $name, completed: $completed) {
-      id
-      name
-      completed
-    }
-  }
-`;
-
-const DELETE_TODO = gql`
-  mutation DeleteTodo($id: String!) {
-    deleteTodo(id: $id) {
-      id
-    }
-  }
-`;
-
-function TodoItem(props: any) {
+function Todo(props: any) {
   const { todo } = props;
-  // const todoId = todo.id;
-  // const router = useRouter();
   const [checked, setChecked] = useState<boolean>(todo.completed);
   const [name, setName] = useState<string>(todo.name);
 
@@ -56,22 +22,6 @@ function TodoItem(props: any) {
             },
           },
         });
-        // const { todos }: any = cache.readQuery({
-        //   query: GET_TODOS,
-        //   variables: {
-        //     todoListId: router.query.id,
-        //   },
-        // });
-
-        // const newTodos = todos.filter(
-        //   (todo) => todo.id !== deleteTodo.id
-        // );
-        // cache.writeQuery({
-        //   query: GET_TODOS,
-        //   data: {
-        //     todos: newTodos,
-        //   },
-        // });
       },
     }
   );
@@ -135,4 +85,4 @@ function TodoItem(props: any) {
   );
 }
 
-export default TodoItem;
+export default Todo;

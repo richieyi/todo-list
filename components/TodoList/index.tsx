@@ -1,34 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { GET_TODO_LISTS } from './queries';
+import { UPDATE_TODO_LIST, DELETE_TODO_LIST } from './mutations';
 
-const UPDATE_TODO_LIST = gql`
-  mutation UpdateTodoList($id: String!, $name: String!) {
-    updateTodoList(id: $id, name: $name) {
-      id
-      name
-    }
-  }
-`;
-
-const DELETE_TODO_LIST = gql`
-  mutation DeleteTodoList($id: String!) {
-    deleteTodoList(id: $id) {
-      id
-    }
-  }
-`;
-
-const GET_TODO_LISTS = gql`
-  query GetTodoLists {
-    todoLists {
-      id
-      name
-    }
-  }
-`;
-
-function TodoListItem(props: any) {
+function TodoList(props: any) {
   const { todoListItem } = props;
   const [updateTodoList] = useMutation(UPDATE_TODO_LIST);
   const [deleteTodoList, { loading: deleteLoading }] = useMutation(
@@ -100,4 +76,4 @@ function TodoListItem(props: any) {
   );
 }
 
-export default TodoListItem;
+export default TodoList;
