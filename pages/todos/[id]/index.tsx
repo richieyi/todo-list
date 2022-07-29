@@ -11,7 +11,7 @@ interface Todo {
   todoListId: string;
 }
 
-const GET_TASKS = gql`
+const GET_TODOS = gql`
   query GetTodos($todoListId: String!) {
     todos(todoListId: $todoListId) {
       id
@@ -21,7 +21,7 @@ const GET_TASKS = gql`
   }
 `;
 
-const CREATE_TASK = gql`
+const CREATE_TODO = gql`
   mutation CreateTodo($name: String!, $todoListId: String!) {
     createTodo(name: $name, todoListId: $todoListId) {
       id
@@ -34,56 +34,59 @@ const CREATE_TASK = gql`
 function TodosPage() {
   const [name, setName] = useState<string>('');
   const router = useRouter();
-  const { data, loading, error } = useQuery(GET_TASKS, {
+  const { data, loading, error } = useQuery(GET_TODOS, {
     variables: {
       todoListId: router.query.id,
     },
     skip: !router.isReady,
   });
-  const [createTodo] = useMutation(CREATE_TASK, {
-    // refetchQueries: [
-    //   {
-    //     query: GET_TASKS,
-    //     variables: {
-    //       todoListId: router.query.id,
-    //     },
-    //   },
-    // ],
-    update(cache, { data: { createTodo } }) {
-      cache.modify({
-        fields: {
-          todos(existingTodos = []) {
-            const newTodoRef = cache.writeFragment({
-              data: createTodo,
-              fragment: gql`
-                fragment NewTodo on Todo {
-                  id
-                  name
-                  completed
-                }
-              `,
-            });
-            return [...existingTodos, newTodoRef];
+  const [createTodo, { loading: createLoading }] = useMutation(
+    CREATE_TODO,
+    {
+      // refetchQueries: [
+      //   {
+      //     query: GET_TASKS,
+      //     variables: {
+      //       todoListId: router.query.id,
+      //     },
+      //   },
+      // ],
+      update(cache, { data: { createTodo } }) {
+        cache.modify({
+          fields: {
+            todos(existingTodos = []) {
+              const newTodoRef = cache.writeFragment({
+                data: createTodo,
+                fragment: gql`
+                  fragment NewTodo on Todo {
+                    id
+                    name
+                    completed
+                  }
+                `,
+              });
+              return [...existingTodos, newTodoRef];
+            },
           },
-        },
-      });
-    },
-    // update(cache, { data: { createTodo } }) {
-    //   const { todos }: any = cache.readQuery({
-    //     query: GET_TASKS,
-    //     variables: {
-    //       todoListId: router.query.id,
-    //     },
-    //   });
+        });
+      },
+      // update(cache, { data: { createTodo } }) {
+      //   const { todos }: any = cache.readQuery({
+      //     query: GET_TASKS,
+      //     variables: {
+      //       todoListId: router.query.id,
+      //     },
+      //   });
 
-    //   cache.writeQuery({
-    //     query: GET_TASKS,
-    //     data: {
-    //       todos: [...todos, createTodo],
-    //     },
-    //   });
-    // },
-  });
+      //   cache.writeQuery({
+      //     query: GET_TASKS,
+      //     data: {
+      //       todos: [...todos, createTodo],
+      //     },
+      //   });
+      // },
+    }
+  );
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -97,6 +100,7 @@ function TodosPage() {
         todoListId: router.query.id,
       },
     });
+    setName('');
   }
 
   function renderTodos() {
@@ -116,7 +120,9 @@ function TodosPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={createLoading}>
+            Submit
+          </button>
         </form>
       </div>
       <div>{renderTodos()}</div>
