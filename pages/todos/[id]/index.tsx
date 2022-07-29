@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { gql, useQuery, useMutation } from '@apollo/client';
+import TaskItem from '../../../components/TaskItem';
 
 interface Task {
   id: string;
@@ -40,33 +41,49 @@ function TasksPage() {
     skip: !router.isReady,
   });
   const [createTask] = useMutation(CREATE_TASK, {
-    refetchQueries: () => [
-      {
-        query: GET_TASKS,
-        variables: {
-          todoListId: router.query.id,
-        },
-      },
-    ],
+    // refetchQueries: [
+    //   {
+    //     query: GET_TASKS,
+    //     variables: {
+    //       todoListId: router.query.id,
+    //     },
+    //   },
+    // ],
     // Running into an issue with this cache update
     // Works when creating a new todo list but not here
-    /*
     update(cache, { data: { createTask } }) {
-      const { tasks } = cache.readQuery({
-        query: GET_TASKS,
-        variables: {
-          todoListId: router.query.id,
-        },
-      });
-
-      cache.writeQuery({
-        query: GET_TASKS,
-        data: {
-          tasks: [...tasks, createTask],
+      cache.modify({
+        fields: {
+          tasks(existingTasks = []) {
+            const newTodoRef = cache.writeFragment({
+              data: createTask,
+              fragment: gql`
+                fragment NewTodo on Todo {
+                  id
+                  name
+                  status
+                }
+              `,
+            });
+            return [...existingTasks, newTodoRef];
+          },
         },
       });
     },
-    */
+    //   const { tasks }: any = cache.readQuery({
+    //     query: GET_TASKS,
+    //     variables: {
+    //       todoListId: router.query.id,
+    //     },
+    //   });
+
+    //   cache.writeQuery({
+    //     query: GET_TASKS,
+    //     data: {
+    //       tasks: [...tasks, createTask],
+    //     },
+    //   });
+    // },
   });
 
   if (loading) return <p>Loading...</p>;
@@ -85,10 +102,7 @@ function TasksPage() {
 
   function renderTasks() {
     return data?.tasks.map((task: Task) => (
-      <div key={task.id} className="my-2">
-        <span>{task.name}</span>
-        <div>Complete: {`${task.status}`}</div>
-      </div>
+      <TaskItem key={task.id} task={task} />
     ));
   }
 
@@ -103,7 +117,7 @@ function TasksPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <button type="submit" className="hidden" />
+          <button type="submit">Submit</button>
         </form>
       </div>
       <div>{renderTasks()}</div>

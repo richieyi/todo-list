@@ -14,6 +14,16 @@ export const Task = objectType({
     t.string('name');
     t.boolean('status');
     t.string('todoListId');
+    // t.list.field('tasks', {
+    //   type: 'Task',
+    //   async resolve(_parent, _args, ctx) {
+    //     return await ctx.prisma.task.findMany({
+    //       where: {
+    //         todoListId: args.todoListId,
+    //       },
+    //     });
+    //   },
+    // });
   },
 });
 

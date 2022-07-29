@@ -7,12 +7,12 @@ const GET_TODO_LISTS = gql`
     todoLists {
       id
       name
-      tasks {
-        id
-        name
-        status
-        todoListId
-      }
+      # tasks {
+      #   id
+      #   name
+      #   status
+      #   todoListId
+      # }
     }
   }
 `;
@@ -22,9 +22,9 @@ const CREATE_TODO_LIST = gql`
     createTodoList(name: $name) {
       id
       name
-      tasks {
-        id
-      }
+      # tasks {
+      #   id
+      # }
     }
   }
 `;
@@ -84,7 +84,7 @@ function TodosPage() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <button type="submit" className="hidden" />
+        <button type="submit">Submit</button>
       </form>
       <div>{renderTodos()}</div>
     </div>
