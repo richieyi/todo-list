@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, useMutation, gql } from '@apollo/client';
 
 const GET_TODO_LISTS = gql`
-  query {
+  query GetTodoLists {
     todoLists {
       id
       name
@@ -17,13 +17,48 @@ const GET_TODO_LISTS = gql`
   }
 `;
 
+const CREATE_TODO_LIST = gql`
+  mutation CreateTodoList($name: String!) {
+    createTodoList(name: $name) {
+      id
+      name
+      tasks {
+        id
+      }
+    }
+  }
+`;
+
 function TodosPage() {
+  const [name, setName] = useState<string>('');
   const { data, loading, error } = useQuery(GET_TODO_LISTS);
+  const [createTodoList] = useMutation(CREATE_TODO_LIST, {
+    update(cache, { data: { createTodoList } }) {
+      const { todoLists }: any = cache.readQuery({
+        query: GET_TODO_LISTS,
+      });
+
+      cache.writeQuery({
+        query: GET_TODO_LISTS,
+        data: {
+          todoLists: [...todoLists, createTodoList],
+        },
+      });
+    },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
 
-  console.log(data);
+  function handleSubmit(e: any) {
+    e.preventDefault();
+
+    createTodoList({
+      variables: {
+        name,
+      },
+    });
+  }
 
   function renderTodos() {
     return data?.todoLists.map((todoList: any) => (
@@ -43,6 +78,14 @@ function TodosPage() {
   return (
     <div className="text-3xl">
       <h1>Todos Page</h1>
+      <span>NEW TODO LIST</span>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button type="submit" className="hidden" />
+      </form>
       <div>{renderTodos()}</div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { objectType, extendType } from 'nexus';
+import { objectType, extendType, nonNull, stringArg } from 'nexus';
 import { Task } from './Task';
 
 // TodoList object type
@@ -30,6 +30,25 @@ export const TodoListsQuery = extendType({
       type: TodoList,
       async resolve(_parent, _args, ctx) {
         return await ctx.prisma.todoList.findMany();
+      },
+    });
+  },
+});
+
+export const CreateTodoListMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('createTodoList', {
+      type: TodoList,
+      args: {
+        name: nonNull(stringArg()),
+      },
+      async resolve(_parents, args, ctx) {
+        return await ctx.prisma.todoList.create({
+          data: {
+            name: args.name,
+          },
+        });
       },
     });
   },

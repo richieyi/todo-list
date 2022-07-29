@@ -39,7 +39,7 @@ export const TasksQuery = extendType({
 export const CreateTaskMutation = extendType({
   type: 'Mutation',
   definition(t) {
-    t.nonNull.field('createTask', {
+    t.field('createTask', {
       type: Task,
       args: {
         name: nonNull(stringArg()),

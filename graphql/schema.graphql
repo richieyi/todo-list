@@ -3,7 +3,8 @@
 
 
 type Mutation {
-  createTask(name: String!, todoListId: String!): Task!
+  createTask(name: String!, todoListId: String!): Task
+  createTodoList(name: String!): TodoList!
   deleteTask(id: String!): Task!
   updateTask(id: String!, name: String!, status: Boolean!): Task!
 }
