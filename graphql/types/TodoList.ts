@@ -10,11 +10,11 @@ export const TodoList = objectType({
     t.string('userId');
     t.nonNull.list.field('todos', {
       type: Todo,
-      async resolve(_parent, _args, ctx) {
+      async resolve(parent, _args, ctx) {
         return await ctx.prisma.todoList
           .findUnique({
             where: {
-              id: _parent.id,
+              id: parent.id,
             },
           })
           .todos();
@@ -45,7 +45,7 @@ export const CreateTodoListMutation = extendType({
         name: nonNull(stringArg()),
         userId: nonNull(stringArg()),
       },
-      async resolve(_parents, args, ctx) {
+      async resolve(_parent, args, ctx) {
         return await ctx.prisma.todoList.create({
           data: {
             name: args.name,

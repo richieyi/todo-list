@@ -2,11 +2,18 @@
 ### Do not make changes to this file directly
 
 
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
 type Mutation {
   createTodo(name: String!, todoListId: String!): Todo
   createTodoList(name: String!, userId: String!): TodoList!
   deleteTodo(id: String!): Todo!
   deleteTodoList(id: String!): TodoList!
+  login(email: String!, password: String!): AuthPayload!
+  signup(email: String!, name: String!, password: String!): AuthPayload!
   updateTodo(completed: Boolean!, id: String!, name: String!): Todo!
   updateTodoList(id: String!, name: String!): TodoList!
 }
