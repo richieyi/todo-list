@@ -53,3 +53,51 @@ export const CreateTodoListMutation = extendType({
     });
   },
 });
+
+export const UpdateTodoListMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('updateTodoList', {
+      type: TodoList,
+      args: {
+        id: nonNull(stringArg()),
+        name: nonNull(stringArg()),
+      },
+      async resolve(_parent, args, ctx) {
+        return await ctx.prisma.todoList.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            name: args.name,
+          },
+        });
+      },
+    });
+  },
+});
+
+export const DeleteTodoListMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('deleteTodoList', {
+      type: TodoList,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      async resolve(_parent, args, ctx) {
+        await ctx.prisma.todo.deleteMany({
+          where: {
+            todoListId: args.id,
+          },
+        });
+
+        return await ctx.prisma.todoList.delete({
+          where: {
+            id: args.id,
+          },
+        });
+      },
+    });
+  },
+});

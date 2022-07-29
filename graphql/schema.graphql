@@ -6,7 +6,9 @@ type Mutation {
   createTodo(name: String!, todoListId: String!): Todo
   createTodoList(name: String!): TodoList!
   deleteTodo(id: String!): Todo!
+  deleteTodoList(id: String!): TodoList!
   updateTodo(completed: Boolean!, id: String!, name: String!): Todo!
+  updateTodoList(id: String!, name: String!): TodoList!
 }
 
 type Query {

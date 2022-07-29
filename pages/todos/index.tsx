@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
+import React, { ChangeEvent, useState } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
+import TodoListItem from '../../components/TodoListItem';
 
 const GET_TODO_LISTS = gql`
   query GetTodoLists {
@@ -20,28 +20,31 @@ const CREATE_TODO_LIST = gql`
   }
 `;
 
-function TodosPage() {
+function TodosListsPage() {
   const [name, setName] = useState<string>('');
   const { data, loading, error } = useQuery(GET_TODO_LISTS);
-  const [createTodoList] = useMutation(CREATE_TODO_LIST, {
-    update(cache, { data: { createTodoList } }) {
-      const { todoLists }: any = cache.readQuery({
-        query: GET_TODO_LISTS,
-      });
+  const [createTodoList, { loading: createLoading }] = useMutation(
+    CREATE_TODO_LIST,
+    {
+      update(cache, { data: { createTodoList } }) {
+        const { todoLists }: any = cache.readQuery({
+          query: GET_TODO_LISTS,
+        });
 
-      cache.writeQuery({
-        query: GET_TODO_LISTS,
-        data: {
-          todoLists: [...todoLists, createTodoList],
-        },
-      });
-    },
-  });
+        cache.writeQuery({
+          query: GET_TODO_LISTS,
+          data: {
+            todoLists: [...todoLists, createTodoList],
+          },
+        });
+      },
+    }
+  );
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
     createTodoList({
@@ -49,20 +52,15 @@ function TodosPage() {
         name,
       },
     });
+    setName('');
   }
 
   function renderTodos() {
-    return data?.todoLists.map((todoList: any) => (
-      <div key={todoList.id}>
-        <Link
-          href={{
-            pathname: '/todos/[id]',
-            query: { id: todoList.id },
-          }}
-        >
-          {todoList.name}
-        </Link>
-      </div>
+    return data?.todoLists.map((todoListItem: any) => (
+      <TodoListItem
+        key={todoListItem.id}
+        todoListItem={todoListItem}
+      />
     ));
   }
 
@@ -71,15 +69,21 @@ function TodosPage() {
       <h1>Todos Page</h1>
       <span>NEW TODO LIST</span>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="todoListName">New Todo List</label>
         <input
+          name="todoListName"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
         />
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={createLoading}>
+          Submit
+        </button>
       </form>
       <div>{renderTodos()}</div>
     </div>
   );
 }
 
-export default TodosPage;
+export default TodosListsPage;

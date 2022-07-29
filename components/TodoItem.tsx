@@ -111,7 +111,9 @@ function TodoItem(props: any) {
         <input
           name="name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setName(e.target.value)
+          }
         />
       </form>
       <form>

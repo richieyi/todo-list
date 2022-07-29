@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { gql, useQuery, useMutation } from '@apollo/client';
@@ -91,7 +91,7 @@ function TodosPage() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
 
     createTodo({
@@ -118,7 +118,9 @@ function TodosPage() {
         <form onSubmit={handleSubmit}>
           <input
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
           />
           <button type="submit" disabled={createLoading}>
             Submit
