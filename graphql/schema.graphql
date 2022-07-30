@@ -9,7 +9,7 @@ type AuthPayload {
 
 type Mutation {
   createTodo(name: String!, todoListId: String!): Todo
-  createTodoList(name: String!, userId: String!): TodoList!
+  createTodoList(name: String!): TodoList!
   deleteTodo(id: String!): Todo!
   deleteTodoList(id: String!): TodoList!
   login(email: String!, password: String!): AuthPayload!

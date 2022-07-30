@@ -47,13 +47,18 @@ export const CreateTodoListMutation = extendType({
       type: TodoList,
       args: {
         name: nonNull(stringArg()),
-        userId: nonNull(stringArg()),
+        // userId: nonNull(stringArg()),
       },
       async resolve(_parent, args, ctx) {
+        if (!ctx.userId) {
+          throw new Error('Must log');
+        }
+
         return await ctx.prisma.todoList.create({
           data: {
             name: args.name,
-            userId: args.userId,
+            // userId: args.userId,
+            userId: ctx.userId,
           },
         });
       },
