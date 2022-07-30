@@ -2,15 +2,7 @@ import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import TodoList from '../../components/TodoList';
 import NewTodoListForm from './NewTodoListForm';
-
-const GET_TODO_LISTS = gql`
-  query GetTodoLists {
-    todoLists {
-      id
-      name
-    }
-  }
-`;
+import { GET_TODO_LISTS } from './queries';
 
 function TodoLists() {
   const { data, loading, error } = useQuery(GET_TODO_LISTS);

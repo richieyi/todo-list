@@ -1,8 +1,9 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import Todo from './index';
 import NewTodoForm from './NewTodoForm';
+import { GET_TODOS } from './queries';
 
 interface Todo {
   id: string;
@@ -10,16 +11,6 @@ interface Todo {
   completed: boolean;
   todoListId: string;
 }
-
-const GET_TODOS = gql`
-  query GetTodos($todoListId: String!) {
-    todos(todoListId: $todoListId) {
-      id
-      name
-      completed
-    }
-  }
-`;
 
 function Todos() {
   const router = useRouter();

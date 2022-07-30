@@ -30,7 +30,11 @@ export const TodoListsQuery = extendType({
     t.nonNull.list.field('todoLists', {
       type: TodoList,
       async resolve(_parent, _args, ctx) {
-        return await ctx.prisma.todoList.findMany();
+        return await ctx.prisma.todoList.findMany({
+          where: {
+            userId: ctx.userId,
+          },
+        });
       },
     });
   },

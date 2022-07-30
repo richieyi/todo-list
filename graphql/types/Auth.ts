@@ -46,7 +46,7 @@ export const AuthMutation = extendType({
         };
       },
     });
-    t.nonNull.field('signup', {
+    t.nonNull.field('signUp', {
       type: AuthPayload,
       args: {
         email: nonNull(stringArg()),
