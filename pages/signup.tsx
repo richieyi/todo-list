@@ -1,7 +1,8 @@
+import type { NextPage } from 'next';
 import SignUp from '../components/SignUp';
 
-function SignUpPage() {
+const SignUpPage: NextPage = () => {
   return <SignUp />;
-}
+};
 
 export default SignUpPage;

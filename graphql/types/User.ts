@@ -31,13 +31,30 @@ export const User = objectType({
 });
 
 // Query for many users
-export const UserQuery = extendType({
+export const UsersQuery = extendType({
   type: 'Query',
   definition(t) {
     t.nonNull.list.field('users', {
       type: User,
       async resolve(_parent, _args, ctx) {
         return await ctx.prisma.user.findMany();
+      },
+    });
+  },
+});
+
+// Query for user
+export const UserQuery = extendType({
+  type: 'Query',
+  definition(t) {
+    t.field('user', {
+      type: 'User',
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.user.findUnique({
+          where: {
+            id: ctx.userId,
+          },
+        });
       },
     });
   },

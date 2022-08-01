@@ -21,6 +21,7 @@ type Mutation {
 type Query {
   todoLists: [TodoList]!
   todos(todoListId: String!): [Todo]!
+  user: User
   users: [User]!
 }
 

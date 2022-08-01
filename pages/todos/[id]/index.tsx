@@ -1,7 +1,8 @@
+import type { NextPage } from 'next';
 import Link from 'next/link';
 import Todos from '../../../components/Todo/Todos';
 
-function TodosPage() {
+const TodosPage: NextPage = () => {
   return (
     <div>
       <Link href="/todos">Back to todos</Link>
@@ -9,6 +10,6 @@ function TodosPage() {
       <Todos />
     </div>
   );
-}
+};
 
 export default TodosPage;
