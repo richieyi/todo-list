@@ -1,28 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { UserContext } from '../../context/userContext';
 
 function Nav() {
-  const router = useRouter();
-  let isUserLoggedIn = false;
-
-  if (typeof window !== 'undefined') {
-    isUserLoggedIn = localStorage.getItem('token') ? true : false;
-  }
-
-  function handleLogout() {
-    localStorage.removeItem('token');
-    router.push('/');
-  }
+  const { token, handleLogout } = useContext(UserContext);
 
   return (
-    <div>
+    <div className="flex justify-end gap-4">
       <Link href="/todos">Todos</Link>
-      {!isUserLoggedIn ? <Link href="/signup">Sign Up</Link> : null}
-      {!isUserLoggedIn ? <Link href="/login">Login</Link> : null}
-      {isUserLoggedIn ? (
-        <button onClick={handleLogout}>Logout</button>
-      ) : null}
+      {!token ? <Link href="/signup">Sign Up</Link> : null}
+      {!token ? <Link href="/login">Login</Link> : null}
+      {token ? <button onClick={handleLogout}>Logout</button> : null}
     </div>
   );
 }

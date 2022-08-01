@@ -1,17 +1,16 @@
-import React, { ChangeEvent, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from './mutations';
+import { UserContext } from '../../context/userContext';
 
 function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const { handleLogin } = useContext(UserContext);
 
-  const router = useRouter();
   const [login] = useMutation(LOGIN, {
     onCompleted: (res) => {
-      localStorage.setItem('token', res.login.token);
-      router.push('/todos');
+      handleLogin(res.login.token);
     },
   });
 
