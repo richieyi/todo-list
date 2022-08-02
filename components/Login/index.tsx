@@ -2,13 +2,15 @@ import React, { ChangeEvent, useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from './mutations';
 import { UserContext } from '../../context/userContext';
+import Input from '../Input';
+import Button from '../Button';
 
 function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const { handleLogin } = useContext(UserContext);
 
-  const [login] = useMutation(LOGIN, {
+  const [login, { loading: loginLoading }] = useMutation(LOGIN, {
     onCompleted: (res) => {
       handleLogin(res.login.user.id);
     },
@@ -28,21 +30,21 @@ function LoginForm() {
   return (
     <div>
       <form onSubmit={handleSubmit} className="flex flex-col">
-        <label htmlFor="email">Email</label>
-        <input
+        <Input
+          labelName="Email"
           type="text"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label htmlFor="password">Password</label>
-        <input
+        <Input
+          labelName="Password"
           type="password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        <Button text="Log In" disabled={loginLoading} />
       </form>
     </div>
   );

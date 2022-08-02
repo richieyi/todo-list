@@ -2,6 +2,8 @@ import React, { ChangeEvent, useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { SIGN_UP } from './mutations';
 import { UserContext } from '../../context/userContext';
+import Input from '../Input';
+import Button from '../Button';
 
 function SignUpForm() {
   const [name, setName] = useState<string>('');
@@ -10,7 +12,7 @@ function SignUpForm() {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const { handleLogin } = useContext(UserContext);
 
-  const [signUp] = useMutation(SIGN_UP, {
+  const [signUp, { loading: signUpLoading }] = useMutation(SIGN_UP, {
     onCompleted: (res) => {
       handleLogin(res.signUp.user.id);
     },
@@ -31,35 +33,35 @@ function SignUpForm() {
   return (
     <div>
       <form onSubmit={handleSubmit} className="flex flex-col">
-        <label htmlFor="name">Name</label>
-        <input
+        <Input
+          labelName="Name"
           type="text"
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <label htmlFor="email">Email</label>
-        <input
+        <Input
+          labelName="Email"
           type="text"
           name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <label htmlFor="password">Password</label>
-        <input
+        <Input
+          labelName="Password"
           type="password"
           name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
+        <Input
+          labelName="Confirm Password"
           type="password"
           name="confirmPassword"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        <Button text="Sign Up" disabled={signUpLoading} />
       </form>
     </div>
   );
