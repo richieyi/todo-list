@@ -24,6 +24,10 @@ export const AuthMutation = extendType({
           where: { id: ctx.userId },
         });
 
+        if (!user) {
+          throw new Error('Invalid user or password');
+        }
+
         const token = jwt.sign(
           { userId: user?.id },
           process.env.APP_SECRET as string
