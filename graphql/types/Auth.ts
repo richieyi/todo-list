@@ -17,6 +17,34 @@ export const AuthPayload = objectType({
 export const AuthMutation = extendType({
   type: 'Mutation',
   definition(t) {
+    t.nonNull.field('logout', {
+      type: AuthPayload,
+      async resolve(_parent, _args, ctx) {
+        const user = await ctx.prisma.user.findUnique({
+          where: { id: ctx.userId },
+        });
+
+        const token = jwt.sign(
+          { userId: user?.id },
+          process.env.APP_SECRET as string
+        );
+        ctx.res.setHeader(
+          'Set-Cookie',
+          cookie.serialize('token', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            expires: new Date(0),
+            sameSite: 'strict',
+            path: '/',
+          })
+        );
+
+        return {
+          token,
+          user,
+        };
+      },
+    });
     t.nonNull.field('login', {
       type: AuthPayload,
       args: {

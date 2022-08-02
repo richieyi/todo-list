@@ -1,37 +1,49 @@
 import { useState, useEffect, createContext } from 'react';
 import { useRouter } from 'next/router';
+import { gql, useQuery } from '@apollo/client';
 
 export const UserContext = createContext({
-  token: '',
+  userId: '',
   handleLogin: (_token: any) => {},
   handleLogout: () => {},
 });
 
-export const UserProvider = ({ children }: { children: any }) => {
-  const [token, setToken] = useState<string>('');
-  const router = useRouter();
+const GET_USER = gql`
+  query GetUser {
+    user {
+      id
+      name
+    }
+  }
+`;
 
-  function handleLogin(token: string) {
-    localStorage.setItem('token', token);
-    // Cookies.set('token', token);
-    setToken(token);
+export const UserProvider = ({ children }: { children: any }) => {
+  const [userId, setUserId] = useState<string>('');
+  const router = useRouter();
+  const { data, loading, error } = useQuery(GET_USER);
+
+  function handleLogin(userId: string) {
+    // localStorage.setItem('token', token);
+    setUserId(userId);
     router.push('/todos');
   }
 
   function handleLogout() {
-    localStorage.removeItem('token');
-    // Cookies.remove('token');
-    setToken('');
+    // localStorage.removeItem('token');
+    setUserId('');
     router.push('/');
   }
 
   useEffect(() => {
-    setToken(localStorage.getItem('token') || '');
-  }, []);
+    // setToken(localStorage.getItem('token') || '');
+    if (data?.user && !loading && !error) {
+      setUserId(data.user.id);
+    }
+  }, [data, loading, error]);
 
   return (
     <UserContext.Provider
-      value={{ token, handleLogin, handleLogout }}
+      value={{ userId, handleLogin, handleLogout }}
     >
       {children}
     </UserContext.Provider>

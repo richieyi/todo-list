@@ -12,7 +12,7 @@ function SignUpForm() {
 
   const [signUp] = useMutation(SIGN_UP, {
     onCompleted: (res) => {
-      handleLogin(res.signUp.token);
+      handleLogin(res.signUp.user.id);
     },
   });
 

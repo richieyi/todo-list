@@ -10,7 +10,7 @@ function LoginForm() {
 
   const [login] = useMutation(LOGIN, {
     onCompleted: (res) => {
-      handleLogin(res.login.token);
+      handleLogin(res.login.user.id);
     },
   });
 
