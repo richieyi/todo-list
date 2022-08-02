@@ -8,8 +8,7 @@ import Button from '../Button';
 
 function TodoList(props: any) {
   const { todoListItem } = props;
-  const [updateTodoList, { loading: updateLoading }] =
-    useMutation(UPDATE_TODO_LIST);
+  const [updateTodoList] = useMutation(UPDATE_TODO_LIST);
   const [deleteTodoList, { loading: deleteLoading }] = useMutation(
     DELETE_TODO_LIST,
     {
@@ -52,7 +51,7 @@ function TodoList(props: any) {
   }
 
   return (
-    <div>
+    <div className="my-4">
       <form onSubmit={handleSubmit}>
         <Input
           labelName="Todo List Name"
@@ -63,25 +62,24 @@ function TodoList(props: any) {
             setName(e.target.value)
           }
         />
-        <Button
-          text="Update"
-          type="submit"
-          disabled={updateLoading}
-        />
-        <Button
-          text="Delete"
-          type="button"
-          onClick={handleDelete}
-          disabled={deleteLoading}
-        />
-        <Link
-          href={{
-            pathname: '/todos/[id]',
-            query: { id: todoListItem.id },
-          }}
-        >
-          Go
-        </Link>
+        <div className="flex justify-between gap-2">
+          <Link
+            href={{
+              pathname: '/todos/[id]',
+              query: { id: todoListItem.id },
+            }}
+          >
+            <button className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded">
+              Go
+            </button>
+          </Link>
+          <Button
+            text="Delete"
+            type="button"
+            onClick={handleDelete}
+            disabled={deleteLoading}
+          />
+        </div>
       </form>
     </div>
   );

@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/client';
 import { GET_TODO_LISTS } from './queries';
 import { CREATE_TODO_LIST } from './mutations';
 import Input from '../Input';
-import Button from '../Button';
 
 function NewTodoListForm() {
   const [name, setName] = useState<string>('');
@@ -40,15 +39,15 @@ function NewTodoListForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
       <Input
-        labelName="New Todo List"
+        labelName="Add New Todo List"
         type="text"
         name="todoListName"
         value={name}
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           setName(e.target.value)
         }
+        disabled={createLoading}
       />
-      <Button type="submit" text="Submit" disabled={createLoading} />
     </form>
   );
 }

@@ -18,7 +18,7 @@ function TodoLists() {
 
   return (
     <>
-      <h1 className="text-2xl">Todos Lists Page</h1>
+      <h1 className="text-2xl">My Todo Lists</h1>
       <NewTodoListForm />
       <div>{renderTodoLists()}</div>
     </>
