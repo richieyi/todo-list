@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import Link from 'next/link';
 import { UPDATE_TODO, DELETE_TODO } from './mutations';
 
 function Todo(props: any) {
@@ -55,32 +56,36 @@ function Todo(props: any) {
   }
 
   return (
-    <div key={todo.id} className="my-2">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Todo name:</label>
-        <input
-          name="name"
-          value={name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value)
-          }
-        />
-      </form>
-      <form>
-        <label htmlFor="completed">Completed:</label>
-        <input
-          name="completed"
-          type="checkbox"
-          checked={checked}
-          onChange={handleCheckbox}
-        />
-      </form>
-      <button
-        onClick={() => handleDelete(todo.id)}
-        disabled={deleteLoading}
-      >
-        Delete
-      </button>
+    <div>
+      <Link href="/todos">Back to todos</Link>
+      <h1 className="text-2xl">Todos page</h1>
+      <div key={todo.id} className="my-2">
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Todo name:</label>
+          <input
+            name="name"
+            value={name}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
+          />
+        </form>
+        <form>
+          <label htmlFor="completed">Completed:</label>
+          <input
+            name="completed"
+            type="checkbox"
+            checked={checked}
+            onChange={handleCheckbox}
+          />
+        </form>
+        <button
+          onClick={() => handleDelete(todo.id)}
+          disabled={deleteLoading}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 }
