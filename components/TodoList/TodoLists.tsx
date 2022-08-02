@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import TodoList from '../../components/TodoList';
 import NewTodoListForm from './NewTodoListForm';
 import { GET_TODO_LISTS } from './queries';
@@ -18,6 +18,7 @@ function TodoLists() {
 
   return (
     <>
+      <h1 className="text-2xl">Todos Lists Page</h1>
       <NewTodoListForm />
       <div>{renderTodoLists()}</div>
     </>

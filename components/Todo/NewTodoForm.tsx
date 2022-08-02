@@ -2,6 +2,8 @@ import React, { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import { gql, useMutation } from '@apollo/client';
 import { CREATE_TODO } from './mutations';
+import Input from '../Input';
+import Button from '../Button';
 
 function NewTodoForm() {
   const router = useRouter();
@@ -45,18 +47,15 @@ function NewTodoForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="todoName">New Todo</label>
-      <input
+    <form onSubmit={handleSubmit} className="flex flex-col">
+      <Input
+        labelName="New Todo"
+        type="text"
         name="todoName"
         value={name}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setName(e.target.value)
-        }
+        onChange={(e) => setName(e.target.value)}
       />
-      <button type="submit" disabled={createLoading}>
-        Submit
-      </button>
+      <Button type="submit" text="Submit" disabled={createLoading} />
     </form>
   );
 }

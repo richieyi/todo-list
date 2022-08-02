@@ -3,10 +3,13 @@ import Link from 'next/link';
 import { useMutation } from '@apollo/client';
 import { GET_TODO_LISTS } from './queries';
 import { UPDATE_TODO_LIST, DELETE_TODO_LIST } from './mutations';
+import Input from '../Input';
+import Button from '../Button';
 
 function TodoList(props: any) {
   const { todoListItem } = props;
-  const [updateTodoList] = useMutation(UPDATE_TODO_LIST);
+  const [updateTodoList, { loading: updateLoading }] =
+    useMutation(UPDATE_TODO_LIST);
   const [deleteTodoList, { loading: deleteLoading }] = useMutation(
     DELETE_TODO_LIST,
     {
@@ -50,29 +53,36 @@ function TodoList(props: any) {
 
   return (
     <div>
-      <h1 className="text-2xl">Todos Lists Page</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="todoListName">Todo List Name</label>
-        <input
+        <Input
+          labelName="Todo List Name"
+          type="text"
           name="todoListName"
           value={name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setName(e.target.value)
           }
         />
-        <button type="submit">Submit</button>
+        <Button
+          text="Update"
+          type="submit"
+          disabled={updateLoading}
+        />
+        <Button
+          text="Delete"
+          type="button"
+          onClick={handleDelete}
+          disabled={deleteLoading}
+        />
+        <Link
+          href={{
+            pathname: '/todos/[id]',
+            query: { id: todoListItem.id },
+          }}
+        >
+          Go
+        </Link>
       </form>
-      <button onClick={handleDelete} disabled={deleteLoading}>
-        Delete
-      </button>
-      <Link
-        href={{
-          pathname: '/todos/[id]',
-          query: { id: todoListItem.id },
-        }}
-      >
-        Go
-      </Link>
     </div>
   );
 }

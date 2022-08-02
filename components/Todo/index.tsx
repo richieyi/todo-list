@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import Link from 'next/link';
 import { UPDATE_TODO, DELETE_TODO } from './mutations';
 
 function Todo(props: any) {
@@ -57,8 +56,6 @@ function Todo(props: any) {
 
   return (
     <div>
-      <Link href="/todos">Back to todos</Link>
-      <h1 className="text-2xl">Todos page</h1>
       <div key={todo.id} className="my-2">
         <form onSubmit={handleSubmit}>
           <label htmlFor="name">Todo name:</label>

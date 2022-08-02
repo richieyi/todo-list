@@ -61,7 +61,11 @@ function SignUpForm() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <Button text="Sign Up" disabled={signUpLoading} />
+        <Button
+          type="submit"
+          text="Sign Up"
+          disabled={signUpLoading}
+        />
       </form>
     </div>
   );

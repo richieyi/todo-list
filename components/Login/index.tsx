@@ -44,7 +44,7 @@ function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button text="Log In" disabled={loginLoading} />
+        <Button type="submit" text="Log In" disabled={loginLoading} />
       </form>
     </div>
   );
