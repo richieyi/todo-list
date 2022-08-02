@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { UserContext } from '../../context/userContext';
 
 function Nav() {
-  const { token } = useContext(UserContext);
+  const { userId } = useContext(UserContext);
 
   return (
     <div className="flex justify-end gap-4">
-      {token ? <Link href="/todos">Todos</Link> : null}
-      {token ? <Link href="/logout">Logout</Link> : null}
-      {!token ? <Link href="/signup">Sign Up</Link> : null}
-      {!token ? <Link href="/login">Login</Link> : null}
+      {userId ? <Link href="/todos">Todos</Link> : null}
+      {userId ? <Link href="/logout">Logout</Link> : null}
+      {!userId ? <Link href="/signup">Sign Up</Link> : null}
+      {!userId ? <Link href="/login">Login</Link> : null}
     </div>
   );
 }

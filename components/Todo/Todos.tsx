@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
+import Link from 'next/link';
 import Todo from './index';
 import NewTodoForm from './NewTodoForm';
 import { GET_TODOS } from './queries';
@@ -32,6 +33,12 @@ function Todos() {
 
   return (
     <>
+      <Link href="/todos">
+        <span className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold py-2 px-4 rounded">
+          Back
+        </span>
+      </Link>
+      <h1 className="text-2xl my-4">My Todos</h1>
       <NewTodoForm />
       <div>{renderTodos()}</div>
     </>

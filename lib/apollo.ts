@@ -7,8 +7,8 @@ import {
 
 // Specifies gql endpoint I interact with
 const httpLink = createHttpLink({
-  uri: 'api/graphql',
-  credentials: 'include',
+  uri: '/api/graphql',
+  credentials: 'same-origin',
 });
 
 // const authLink = setContext((_, { headers }) => {
