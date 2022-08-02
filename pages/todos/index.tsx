@@ -5,12 +5,4 @@ const TodoListsPage: NextPage = () => {
   return <TodoLists />;
 };
 
-export async function getStaticProps() {
-  return {
-    props: {
-      protected: true,
-    },
-  };
-}
-
 export default TodoListsPage;

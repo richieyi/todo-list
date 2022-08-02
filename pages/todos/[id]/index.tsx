@@ -5,12 +5,4 @@ const TodosPage: NextPage = () => {
   return <Todos />;
 };
 
-export async function getStaticProps() {
-  return {
-    props: {
-      protected: true,
-    },
-  };
-}
-
 export default TodosPage;

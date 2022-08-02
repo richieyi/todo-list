@@ -13,12 +13,14 @@ export const UserProvider = ({ children }: { children: any }) => {
 
   function handleLogin(token: string) {
     localStorage.setItem('token', token);
+    // Cookies.set('token', token);
     setToken(token);
     router.push('/todos');
   }
 
   function handleLogout() {
     localStorage.removeItem('token');
+    // Cookies.remove('token');
     setToken('');
     router.push('/');
   }
