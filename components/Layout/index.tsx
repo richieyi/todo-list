@@ -10,9 +10,11 @@ const Layout = ({ children }: { children: any }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="m-8 p-8">
-        <Nav />
-        {children}
+      <main>
+        <div className="max-w-xl m-auto py-12 px-4 flex flex-col items-center">
+          <Nav />
+          <div className="w-full">{children}</div>
+        </div>
       </main>
 
       <footer></footer>

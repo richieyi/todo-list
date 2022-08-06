@@ -6,7 +6,7 @@ function Nav() {
   const { userId } = useContext(UserContext);
 
   return (
-    <div className="flex justify-end gap-4">
+    <div className="flex w-full justify-end gap-4">
       {userId ? <Link href="/todos">Todos</Link> : null}
       {userId ? <Link href="/logout">Logout</Link> : null}
       {!userId ? <Link href="/signup">Sign Up</Link> : null}

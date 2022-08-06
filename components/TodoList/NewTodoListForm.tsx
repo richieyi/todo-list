@@ -39,7 +39,7 @@ function NewTodoListForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
       <Input
-        labelName="Add New Todo List"
+        // labelName="Add New Todo List"
         type="text"
         name="todoListName"
         value={name}
@@ -47,6 +47,7 @@ function NewTodoListForm() {
           setName(e.target.value)
         }
         disabled={createLoading}
+        placeholder="Add new todo list..."
       />
     </form>
   );

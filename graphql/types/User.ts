@@ -48,11 +48,30 @@ export const UserQuery = extendType({
   type: 'Query',
   definition(t) {
     t.field('user', {
-      type: 'User',
+      type: User,
       async resolve(_parent, _args, ctx) {
         return await ctx.prisma.user.findUnique({
           where: {
             id: ctx.userId,
+          },
+        });
+      },
+    });
+  },
+});
+
+export const UpdateUserMutation = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.nonNull.field('updateUserTest', {
+      type: User,
+      args: {
+        userId: nonNull(stringArg()),
+      },
+      async resolve(_parent, _args, ctx) {
+        return await ctx.prisma.user.delete({
+          where: {
+            id: _args.userId,
           },
         });
       },

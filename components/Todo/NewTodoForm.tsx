@@ -48,12 +48,13 @@ function NewTodoForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col">
       <Input
-        labelName="Add New Todo"
+        // labelName="Add New Todo"
         type="text"
         name="todoName"
         value={name}
         onChange={(e) => setName(e.target.value)}
         disabled={createLoading}
+        placeholder="Add new todo..."
       />
     </form>
   );

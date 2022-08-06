@@ -17,6 +17,7 @@ type Mutation {
   signUp(email: String!, name: String!, password: String!): AuthPayload!
   updateTodo(completed: Boolean!, id: String!, name: String!): Todo!
   updateTodoList(id: String!, name: String!): TodoList!
+  updateUserTest(userId: String!): User!
 }
 
 type Query {
