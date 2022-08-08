@@ -1,7 +1,9 @@
 import React from 'react';
 
+type ButtonType = 'button' | 'submit';
+
 interface ButtonProps {
-  type: 'button' | 'submit';
+  type: ButtonType;
   text: string;
   disabled: boolean;
   onClick?: () => void;
@@ -13,7 +15,7 @@ function Button(props: ButtonProps) {
   return (
     <button
       type={type}
-      className="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold py-2 px-4 rounded"
+      className="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 rounded"
       disabled={disabled}
       onClick={onClick}
     >

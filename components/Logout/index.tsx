@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import React, { useContext, useEffect } from 'react';
-import { UserContext } from '../../context/userContext';
+import { UserContext } from '../../context/UserContext';
 import { LOGOUT } from './mutations';
 
 function Logout() {

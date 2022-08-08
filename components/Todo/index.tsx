@@ -59,28 +59,22 @@ function Todo(props: any) {
   return (
     <div>
       <div key={todo.id} className="my-4">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <input
+            name="completed"
+            type="checkbox"
+            checked={checked}
+            onChange={handleCheckbox}
+            className="text-sm font-medium text-gray-900 dark:text-gray-300"
+          />
           <Input
             type="text"
-            labelName="Todo Name"
             name="name"
             value={name}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value)
             }
           />
-        </form>
-        <form className="flex justify-between">
-          <div>
-            <label htmlFor="completed">Completed</label>
-            <input
-              name="completed"
-              type="checkbox"
-              checked={checked}
-              onChange={handleCheckbox}
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            />
-          </div>
           <Button
             type="button"
             onClick={() => handleDelete(todo.id)}

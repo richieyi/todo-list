@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Link from 'next/link';
-import { UserContext } from '../../context/userContext';
+import { UserContext } from '../../context/UserContext';
 
 function Nav() {
   const { userId } = useContext(UserContext);

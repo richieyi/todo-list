@@ -33,12 +33,14 @@ function Todos() {
 
   return (
     <>
-      <Link href="/todos">
-        <span className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold py-2 px-4 rounded">
-          Back
-        </span>
-      </Link>
-      <h1 className="text-2xl my-4">My Todos</h1>
+      <div className="flex justify-between items-center my-4">
+        <h1 className="text-2xl">My Todos</h1>
+        <Link href="/todos">
+          <span className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold py-2 px-4 rounded">
+            Back
+          </span>
+        </Link>
+      </div>
       <NewTodoForm />
       <div>{renderTodos()}</div>
     </>

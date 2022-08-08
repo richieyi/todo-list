@@ -52,9 +52,8 @@ function TodoList(props: any) {
 
   return (
     <div className="my-4">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex gap-2">
         <Input
-          labelName="Todo List Name"
           type="text"
           name="todoListName"
           value={name}
@@ -62,24 +61,22 @@ function TodoList(props: any) {
             setName(e.target.value)
           }
         />
-        <div className="flex justify-between gap-2">
-          <Link
-            href={{
-              pathname: '/todos/[id]',
-              query: { id: todoListItem.id },
-            }}
-          >
-            <button className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded">
-              Go
-            </button>
-          </Link>
-          <Button
-            text="Delete"
-            type="button"
-            onClick={handleDelete}
-            disabled={deleteLoading}
-          />
-        </div>
+        <Link
+          href={{
+            pathname: '/todos/[id]',
+            query: { id: todoListItem.id },
+          }}
+        >
+          <button className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded">
+            Go
+          </button>
+        </Link>
+        <Button
+          text="Delete"
+          type="button"
+          onClick={handleDelete}
+          disabled={deleteLoading}
+        />
       </form>
     </div>
   );
