@@ -44,7 +44,12 @@ function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button type="submit" text="Log In" disabled={loginLoading} />
+        <Button
+          type="submit"
+          text="Log In"
+          disabled={loginLoading}
+          color="blue"
+        />
       </form>
     </div>
   );

@@ -65,6 +65,7 @@ function SignUpForm() {
           type="submit"
           text="Sign Up"
           disabled={signUpLoading}
+          color="blue"
         />
       </form>
     </div>

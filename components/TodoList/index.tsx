@@ -60,6 +60,7 @@ function TodoList(props: any) {
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setName(e.target.value)
           }
+          disabled={deleteLoading}
         />
         <Link
           href={{
@@ -67,7 +68,10 @@ function TodoList(props: any) {
             query: { id: todoListItem.id },
           }}
         >
-          <button className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded">
+          <button
+            className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded"
+            disabled={deleteLoading}
+          >
             Go
           </button>
         </Link>
@@ -76,6 +80,7 @@ function TodoList(props: any) {
           type="button"
           onClick={handleDelete}
           disabled={deleteLoading}
+          color="red"
         />
       </form>
     </div>
