@@ -17,11 +17,11 @@ function TodoLists() {
   }
 
   return (
-    <>
-      <h1 className="text-2xl my-4">My Todo Lists</h1>
+    <div className="border rounded drop-shadow-lg p-4 my-4">
+      <h1 className="text-2xl mb-8">My Todo Lists</h1>
       <NewTodoListForm />
       <div>{renderTodoLists()}</div>
-    </>
+    </div>
   );
 }
 

@@ -29,7 +29,7 @@ function LoginForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="flex flex-col">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Input
           labelName="Email"
           type="text"

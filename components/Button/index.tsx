@@ -17,7 +17,7 @@ function Button(props: ButtonProps) {
   return (
     <button
       type={type}
-      className={`bg-${color}-500 hover:bg-${color}-700 disabled:bg-gray-200 text-white font-bold px-4 rounded`}
+      className={`bg-${color}-500 hover:bg-${color}-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded`}
       disabled={disabled}
       onClick={onClick}
     >
