@@ -1,7 +1,7 @@
-import React, { ChangeEvent, useContext, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { SIGN_UP } from './mutations';
-import { UserContext } from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
 import Input from '../Input';
 import Button from '../Button';
 
@@ -10,7 +10,7 @@ function SignUpForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const { handleLogin } = useContext(UserContext);
+  const { handleLogin } = useUser();
 
   const [signUp, { loading: signUpLoading }] = useMutation(SIGN_UP, {
     onCompleted: (res) => {

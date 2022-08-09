@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { UserContext } from '../../context/UserContext';
+import { useUser } from '../../context/UserContext';
 
 function Nav() {
-  const { userId } = useContext(UserContext);
+  const { userId } = useUser();
 
   return (
     <div className="flex w-full justify-end gap-4">

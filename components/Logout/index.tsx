@@ -1,10 +1,10 @@
 import { useMutation } from '@apollo/client';
-import React, { useContext, useEffect } from 'react';
-import { UserContext } from '../../context/UserContext';
+import React, { useEffect } from 'react';
+import { useUser } from '../../context/UserContext';
 import { LOGOUT } from './mutations';
 
 function Logout() {
-  const { handleLogout } = useContext(UserContext);
+  const { handleLogout } = useUser();
   const [logout] = useMutation(LOGOUT, {
     onCompleted: () => {
       handleLogout();

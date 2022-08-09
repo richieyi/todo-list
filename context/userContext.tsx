@@ -1,4 +1,9 @@
-import { useState, useEffect, createContext } from 'react';
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+} from 'react';
 import { useRouter } from 'next/router';
 import { gql, useQuery } from '@apollo/client';
 
@@ -49,3 +54,8 @@ export const UserProvider = ({ children }: { children: any }) => {
     </UserContext.Provider>
   );
 };
+
+export function useUser() {
+  const context = useContext(UserContext);
+  return context;
+}
