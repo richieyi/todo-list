@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { useUser } from '../../context/UserContext';
+import { useUser } from '../../context/userContext';
 
 function Nav() {
   const { userId } = useUser();

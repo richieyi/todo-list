@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { ApolloProvider } from '@apollo/client';
-import { UserProvider } from '../context/UserContext';
+import { UserProvider } from '../context/userContext';
 import apolloClient from '../lib/apollo';
 import Layout from '../components/Layout';
 

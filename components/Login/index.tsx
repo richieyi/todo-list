@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from './mutations';
-import { useUser } from '../../context/UserContext';
+import { useUser } from '../../context/userContext';
 import Input from '../Input';
 import Button from '../Button';
 
