@@ -3,8 +3,13 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_TODO, DELETE_TODO } from './mutations';
 import Input from '../Input';
 import Button from '../Button';
+import { Todo } from './Todos';
 
-function Todo(props: any) {
+interface TodoProps {
+  todo: Todo;
+}
+
+function Todo(props: TodoProps) {
   const { todo } = props;
   const [checked, setChecked] = useState<boolean>(todo.completed);
   const [name, setName] = useState<string>(todo.name);

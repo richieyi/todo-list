@@ -9,7 +9,7 @@ import { gql, useQuery } from '@apollo/client';
 
 export const UserContext = createContext({
   userId: '',
-  handleLogin: (_token: any) => {},
+  handleLogin: (_token: string) => {},
   handleLogout: () => {},
 });
 
@@ -22,7 +22,13 @@ const GET_USER = gql`
   }
 `;
 
-export const UserProvider = ({ children }: { children: any }) => {
+interface UserProviderProps {
+  children: JSX.Element;
+}
+
+export const UserProvider = (props: UserProviderProps) => {
+  const { children } = props;
+
   const [userId, setUserId] = useState<string>('');
   const router = useRouter();
   const { data, loading, error } = useQuery(GET_USER);

@@ -6,7 +6,7 @@ import Todo from './index';
 import NewTodoForm from './NewTodoForm';
 import { GET_TODOS } from './queries';
 
-interface Todo {
+export interface Todo {
   id: string;
   name: string;
   completed: boolean;

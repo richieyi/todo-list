@@ -5,8 +5,13 @@ import { GET_TODO_LISTS } from './queries';
 import { UPDATE_TODO_LIST, DELETE_TODO_LIST } from './mutations';
 import Input from '../Input';
 import Button from '../Button';
+import { TodoListItem } from './TodoLists';
 
-function TodoList(props: any) {
+interface TodoListProps {
+  todoListItem: TodoListItem;
+}
+
+function TodoList(props: TodoListProps) {
   const { todoListItem } = props;
   const [updateTodoList] = useMutation(UPDATE_TODO_LIST);
   const [deleteTodoList, { loading: deleteLoading }] = useMutation(

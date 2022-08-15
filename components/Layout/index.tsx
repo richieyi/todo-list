@@ -1,7 +1,13 @@
 import Head from 'next/head';
 import Nav from '../Nav';
 
-const Layout = ({ children }: { children: any }) => {
+interface LayoutProps {
+  children: JSX.Element;
+}
+
+const Layout = (props: LayoutProps) => {
+  const { children } = props;
+
   return (
     <div>
       <Head>
