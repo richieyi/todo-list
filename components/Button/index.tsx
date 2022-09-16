@@ -13,12 +13,16 @@ interface ButtonProps {
 
 function Button(props: ButtonProps) {
   const { type, color, text, disabled, onClick } = props;
+  let classColor = 'bg-blue-500 hover:bg-blue-700';
+
+  if (color === 'red') {
+    classColor = 'bg-red-500 hover:bg-red-700';
+  }
 
   return (
     <button
       type={type}
-      className={`bg-${color}-500 hover:bg-${color}-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded`}
-      // className={`bg-slate-500 hover:bg-slate-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded`}
+      className={`${classColor} disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded`}
       disabled={disabled}
       onClick={onClick}
     >
