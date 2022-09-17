@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 import { UPDATE_TODO, DELETE_TODO } from './mutations';
 import Input from '../Input';
 import Button from '../Button';
@@ -8,6 +9,18 @@ import { Todo } from './Todos';
 interface TodoProps {
   todo: Todo;
 }
+
+const deleteNotify = () =>
+  toast.success('Todo deleted!', {
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
+
+const updateNotify = () =>
+  toast.success('Todo updated!', {
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
 
 function Todo(props: TodoProps) {
   const { todo } = props;
@@ -29,6 +42,8 @@ function Todo(props: TodoProps) {
             },
           },
         });
+
+        deleteNotify();
       },
     }
   );
@@ -41,6 +56,8 @@ function Todo(props: TodoProps) {
         completed: !checked,
       },
     });
+
+    updateNotify();
   }
 
   function handleSubmit(e: ChangeEvent<HTMLFormElement>) {

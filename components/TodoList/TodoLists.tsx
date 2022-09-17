@@ -11,7 +11,6 @@ export interface TodoListItem {
 
 function TodoLists() {
   const { data, loading, error } = useQuery(GET_TODO_LISTS);
-  console.log(data);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;

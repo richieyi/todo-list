@@ -1,8 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import { gql, useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 import { CREATE_TODO } from './mutations';
 import Input from '../Input';
+
+const createNotify = () =>
+  toast.success('New todo created!', {
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
 
 function NewTodoForm() {
   const router = useRouter();
@@ -29,6 +36,8 @@ function NewTodoForm() {
             },
           },
         });
+
+        createNotify();
       },
     }
   );

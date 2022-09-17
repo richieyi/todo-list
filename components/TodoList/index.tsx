@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 import { GET_TODO_LISTS } from './queries';
 import { UPDATE_TODO_LIST, DELETE_TODO_LIST } from './mutations';
 import Input from '../Input';
@@ -10,6 +11,18 @@ import { TodoListItem } from './TodoLists';
 interface TodoListProps {
   todoListItem: TodoListItem;
 }
+
+const deleteNotify = () =>
+  toast.success('Todo list deleted!', {
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
+
+const updateNotify = () =>
+  toast.success('Todo list updated!', {
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
 
 function TodoList(props: TodoListProps) {
   const { todoListItem } = props;
@@ -30,6 +43,7 @@ function TodoList(props: TodoListProps) {
             ),
           },
         });
+        deleteNotify();
       },
     }
   );
@@ -45,6 +59,8 @@ function TodoList(props: TodoListProps) {
         name,
       },
     });
+
+    updateNotify();
   }
 
   function handleDelete() {

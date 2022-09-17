@@ -1,8 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { toast } from 'react-toastify';
 import { GET_TODO_LISTS } from './queries';
 import { CREATE_TODO_LIST } from './mutations';
 import Input from '../Input';
+
+const createNotify = () =>
+  toast.success('New todo list created!', {
+    autoClose: 3000,
+    hideProgressBar: true,
+  });
 
 function NewTodoListForm() {
   const [name, setName] = useState<string>('');
@@ -21,6 +28,7 @@ function NewTodoListForm() {
             todoLists: [...todoLists, createTodoList],
           },
         });
+        createNotify();
       },
     }
   );
