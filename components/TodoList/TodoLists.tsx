@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import TodoList from '../../components/TodoList';
+import TodoList from './TodoList';
 import NewTodoListForm from './NewTodoListForm';
 import { GET_TODO_LISTS } from './queries';
 
