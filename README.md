@@ -1,6 +1,6 @@
 # [Todo List ✔️](https://todo-list-inky-six.vercel.app/)
 
-<img src="./screenshot.jpg">
+<img src="./screenshot.png">
 
 ## Tools used
 
