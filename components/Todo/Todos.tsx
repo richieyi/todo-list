@@ -37,14 +37,36 @@ function Todos() {
   if (error) return <p>Oh no... {error.message}</p>;
 
   function renderTodos() {
-    return data?.todos.map((todo: Todo) => (
+    let filteredData = data?.todos;
+
+    if (filteredData && todoFilter === 'Completed') {
+      filteredData = filteredData.filter(
+        (todo: Todo) => todo.completed
+      );
+    } else if (filteredData && todoFilter === 'Incomplete') {
+      filteredData = filteredData.filter(
+        (todo: Todo) => !todo.completed
+      );
+    }
+
+    return filteredData?.map((todo: Todo) => (
       <Todo key={todo.id} todo={todo} />
     ));
   }
 
+  function handleFilterChange(filterType: TodoFilterType) {
+    setTodoFilter(filterType);
+  }
+
   function renderFilters() {
     return todoFilters.map((filter, idx) => (
-      <button key={idx} className="hover:text-blue-700">
+      <button
+        key={idx}
+        className={`hover:text-blue-700 ${
+          todoFilter === filter ? 'font-bold' : ''
+        }`}
+        onClick={() => handleFilterChange(filter)}
+      >
         {filter}
       </button>
     ));
