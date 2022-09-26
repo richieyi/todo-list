@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
-import Link from 'next/link';
 import { useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import { GET_TODO_LISTS } from './queries';
 import { UPDATE_TODO_LIST, DELETE_TODO_LIST } from './mutations';
 import Input from '../Input';
@@ -26,6 +26,7 @@ const updateNotify = () =>
 
 function TodoList(props: TodoListProps) {
   const { todoListItem } = props;
+  const [name, setName] = useState<string>(todoListItem.name);
   const [updateTodoList] = useMutation(UPDATE_TODO_LIST);
   const [deleteTodoList, { loading: deleteLoading }] = useMutation(
     DELETE_TODO_LIST,
@@ -47,8 +48,7 @@ function TodoList(props: TodoListProps) {
       },
     }
   );
-
-  const [name, setName] = useState<string>(todoListItem.name);
+  const router = useRouter();
 
   function handleSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -72,8 +72,8 @@ function TodoList(props: TodoListProps) {
   }
 
   return (
-    <div className="my-4">
-      <form onSubmit={handleSubmit} className="flex gap-2">
+    <div className="my-4 flex gap-2">
+      <form className="flex-1" onSubmit={handleSubmit}>
         <Input
           type="text"
           name="todoListName"
@@ -83,27 +83,21 @@ function TodoList(props: TodoListProps) {
           }
           disabled={deleteLoading}
         />
-        <Link
-          href={{
-            pathname: '/todos/[id]',
-            query: { id: todoListItem.id },
-          }}
-        >
-          <button
-            className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded"
-            disabled={deleteLoading}
-          >
-            Go
-          </button>
-        </Link>
-        <Button
-          text="Delete"
-          type="button"
-          onClick={handleDelete}
-          disabled={deleteLoading}
-          color="red"
-        />
       </form>
+      <button
+        className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 disabled:bg-gray-200 text-white font-bold px-4 py-2 rounded"
+        disabled={deleteLoading}
+        onClick={() => router.push(`/todos/${todoListItem.id}`)}
+      >
+        Go
+      </button>
+      <Button
+        text="Delete"
+        type="button"
+        onClick={handleDelete}
+        disabled={deleteLoading}
+        color="red"
+      />
     </div>
   );
 }
